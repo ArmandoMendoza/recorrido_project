@@ -1,7 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+
+company = Company.find_or_create_by!(name: "Recorrido.cl")
+
+["Ernesto", "Bárbara", "Benjamin"].each do |name|
+  company.users.find_or_create_by!(name: name)
+end
+
+unless company.contract
+  company.create_contract!(terms: "Et sed sed. Id quae qui. Pariatur autem rerum.")
+end
+
+contract = company.contract
+
+contract.contract_schedules.find_or_create_by!(day: "monday",    start_hour: "19:00", hours: 5)
+contract.contract_schedules.find_or_create_by!(day: "tuesday",   start_hour: "19:00", hours: 5)
+contract.contract_schedules.find_or_create_by!(day: "wednesday", start_hour: "19:00", hours: 5)
+contract.contract_schedules.find_or_create_by!(day: "thursday",  start_hour: "19:00", hours: 5)
+contract.contract_schedules.find_or_create_by!(day: "friday",    start_hour: "19:00", hours: 5)
+contract.contract_schedules.find_or_create_by!(day: "saturday",  start_hour: "10:00", hours: 14)
+contract.contract_schedules.find_or_create_by!(day: "sunday",    start_hour: "10:00", hours: 14)

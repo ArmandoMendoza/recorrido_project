@@ -5,5 +5,5 @@ class Company < ApplicationRecord
   has_many :users
 
   ### Validations
-  validates_presence_of :terms
+  validates_presence_of :name
 end
