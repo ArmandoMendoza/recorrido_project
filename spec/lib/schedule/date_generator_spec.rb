@@ -7,7 +7,7 @@ RSpec.describe Schedule::DateGenerator, type: :lib do
   it "should return a array of hash using date_rules" do
       contract_details = []
       contract_details << ContractDetail.new(day: "monday", start_hour: "08:30", hours: 5)
-      contract_details << ContractDetail.new(day: "tuesday", start_hour: "08:30", hours: 5)
+      contract_details << ContractDetail.new(day: "friday", start_hour: "08:30", hours: 5)
 
       start_date = Time.zone.today
       end_date = start_date + 5.week
@@ -18,7 +18,7 @@ RSpec.describe Schedule::DateGenerator, type: :lib do
       date_generator = Schedule::DateGenerator.new(start_date: start_date, end_date: end_date, date_rules: date_rules)
       dates = date_generator.dates
       
-      # date = { week: 1, date: Time }
+      # date is a hash like { week: 1, date: Time, day: 1 }
       date = dates.sample
 
       expect(date).to have_key(:date)
@@ -26,5 +26,8 @@ RSpec.describe Schedule::DateGenerator, type: :lib do
 
       expect(date).to have_key(:week)
       expect(date[:week].class).to eq(Integer)
+
+      expect(date).to have_key(:day)
+      expect(date[:day].class).to eq(Integer)
   end
 end

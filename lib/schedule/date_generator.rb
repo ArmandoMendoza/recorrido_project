@@ -20,7 +20,7 @@ module Schedule
       end
       schedule.occurrences(end_date).each do |occurrence|
         week = occurrence.strftime('%U').to_i
-        @dates << { week: week, date: occurrence.to_time }
+        @dates << { week: week, date: occurrence.to_time, day: occurrence.wday }
       end
     end
   end
