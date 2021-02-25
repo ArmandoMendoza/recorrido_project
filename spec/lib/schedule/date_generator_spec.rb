@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Schedule::DateGenerator, type: :lib do
-  ## Mock a ContractDetail
-  class ContractDetail < OpenStruct; end
+  ## Mock a ContractSchedule
+  class ContractSchedule < OpenStruct; end
 
   it "should return a array of hash using date_rules" do
-      contract_details = []
-      contract_details << ContractDetail.new(day: "monday", start_hour: "08:30", hours: 5)
-      contract_details << ContractDetail.new(day: "friday", start_hour: "08:30", hours: 5)
+      contract_schedules = []
+      contract_schedules << ContractSchedule.new(day: "monday", start_hour: "08:30", hours: 5)
+      contract_schedules << ContractSchedule.new(day: "friday", start_hour: "08:30", hours: 5)
 
       start_date = Time.zone.today
       end_date = start_date + 5.week
 
-      rule_generator = Schedule::DateRuleGenerator.new(contract_details)
+      rule_generator = Schedule::DateRuleGenerator.new(contract_schedules)
       date_rules = rule_generator.rules
 
       date_generator = Schedule::DateGenerator.new(start_date: start_date, end_date: end_date, date_rules: date_rules)

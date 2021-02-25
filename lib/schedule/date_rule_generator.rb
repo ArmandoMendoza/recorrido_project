@@ -1,10 +1,10 @@
 module Schedule
   class DateRuleGenerator
 
-    attr_reader :rules, :contract_details
+    attr_reader :rules, :contract_schedules
 
-    def initialize(contract_details)
-      @contract_details = contract_details
+    def initialize(contract_schedules)
+      @contract_schedules = contract_schedules
       @rules = []
       run!
     end
@@ -12,7 +12,7 @@ module Schedule
     private
 
     def run!
-      contract_details.each do |cd|
+      contract_schedules.each do |cd|
 
         from_start_hour, min = cd.start_hour.split(":").map(&:to_i)
 
