@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: Geforce9800gtx
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: recorrido_project_development
+
+test:
+  <<: *default
+  database: recorrido_project_test
