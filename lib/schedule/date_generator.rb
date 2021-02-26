@@ -18,9 +18,9 @@ module Schedule
       date_rules.each do |rule| 
         schedule.add_recurrence_rule IceCube::Rule.weekly.day(rule.day).hour_of_day(rule.hour).minute_of_hour(rule.min)
       end
-      schedule.occurrences(end_date).each do |occurrence|
+      schedule.occurrences(end_date).each_with_index do |occurrence, index|
         week = occurrence.strftime('%U').to_i
-        @dates << { week: week, date: occurrence.to_time, day: occurrence.wday }
+        @dates << { week: week, time: occurrence.to_time, day: occurrence.wday, block: (index + 1) }
       end
     end
   end

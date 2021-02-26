@@ -15,5 +15,12 @@ FactoryBot.define do
     company
   end
 
+  factory :contract_schedule do
+    day { 1 }
+    start_hour { "08:00" }
+    hours { 8 }
+    contract
+  end
+
 
 end
