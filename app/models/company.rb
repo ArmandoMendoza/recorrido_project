@@ -4,6 +4,7 @@ class Company < ApplicationRecord
   has_one :contract
   has_many :users
   has_many :company_schedules
+  has_many :user_schedules
   has_many :contract_schedules, through: :contract
 
   ### Validations
@@ -25,6 +26,10 @@ class Company < ApplicationRecord
     
     dates.each do |date|
       company_schedules.find_or_create_by!(date)
+
+      available_users.each do |user|
+        user_schedules.find_or_create_by!(date.merge(user: user))
+      end
     end
   end
 

@@ -20,3 +20,5 @@ contract.contract_schedules.find_or_create_by!(day: "thursday",  start_hour: "19
 contract.contract_schedules.find_or_create_by!(day: "friday",    start_hour: "19:00", hours: 5)
 contract.contract_schedules.find_or_create_by!(day: "saturday",  start_hour: "10:00", hours: 14)
 contract.contract_schedules.find_or_create_by!(day: "sunday",    start_hour: "10:00", hours: 14)
+
+company.create_schedules!

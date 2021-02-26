@@ -13,7 +13,7 @@ RSpec.describe Schedule::DateRuleGenerator, type: :lib do
     date_rules = rule_generator.rules
     date_rule = date_rules.sample
 
-    expect(date_rules.size).to eq(12)
+    expect(date_rules.size).to eq(10)
 
     expect(date_rule).to respond_to(:day)
     expect(date_rule).to respond_to(:hour)

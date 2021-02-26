@@ -1,8 +1,8 @@
-class CompanySchedule < ApplicationRecord
+class UserSchedule < ApplicationRecord
 
   ### Relations
   belongs_to :company
-  belongs_to :user, optional: true
+  belongs_to :user
 
   ### Validations
   validates_presence_of :week, :day, :block, :time
