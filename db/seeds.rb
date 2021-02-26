@@ -8,7 +8,7 @@ company = Company.find_or_create_by!(name: "Recorrido.cl")
 end
 
 unless company.contract
-  company.create_contract!(terms: "Et sed sed. Id quae qui. Pariatur autem rerum.")
+  company.create_contract!(terms: "Et sed sed. Id quae qui. Pariatur autem rerum.", start_date: Time.zone.today, end_date: (Time.zone.today + 1.week))
 end
 
 contract = company.contract

@@ -7,7 +7,7 @@ RSpec.describe Schedule::DateRuleGenerator, type: :lib do
     
     contract_schedules = []
     contract_schedules << ContractScheduleMock.new(day: "monday", start_hour: "08:30", hours: 5)
-    contract_schedules << ContractScheduleMock.new(day: "tuesday", start_hour: "08:30", hours: 5)
+    contract_schedules << ContractScheduleMock.new(day: "sunday", start_hour: "08:30", hours: 5)
 
     rule_generator = Schedule::DateRuleGenerator.new(contract_schedules)
     date_rules = rule_generator.rules

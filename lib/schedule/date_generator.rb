@@ -15,7 +15,7 @@ module Schedule
 
     def run!
       schedule = IceCube::Schedule.new(start_date)
-      date_rules.each do |rule| 
+      date_rules.each do |rule|
         schedule.add_recurrence_rule IceCube::Rule.weekly.day(rule.day).hour_of_day(rule.hour).minute_of_hour(rule.min)
       end
       schedule.occurrences(end_date).each_with_index do |occurrence, index|

@@ -4,21 +4,25 @@ class Company < ApplicationRecord
   has_one :contract
   has_many :users
   has_many :company_schedules
+  has_many :contract_schedules, through: :contract
 
   ### Validations
   validates_presence_of :name
 
   ### Instance Methods
 
-  def create_schedules(start_time:, end_time:, date_rules:)
-    contract_schedules = contract.contract_schedules
+  def available_users
+    users
+  end
 
-    rule_generator = Schedule::DateRuleGenerator.new(contract_schedules)
-    date_rules = rule_generator.rules
+  def create_schedules!(start_date: nil, end_date: nil)
 
-    date_generator = Schedule::DateGenerator.new(start_date: start_date, end_date: end_date, date_rules: date_rules)
-    dates = date_generator.dates
-
+     s_date = start_date || contract.start_date
+     e_date = end_date   || contract.end_date
+    
+    date_rules = Schedule::DateRuleGenerator.new(contract_schedules).rules
+    dates = Schedule::DateGenerator.new(start_date: s_date, end_date: e_date, date_rules: date_rules).dates
+    
     dates.each do |date|
       company_schedules.find_or_create_by!(date)
     end
