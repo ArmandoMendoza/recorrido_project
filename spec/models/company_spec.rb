@@ -14,10 +14,14 @@ RSpec.describe Company, type: :model do
 
   let!(:company){ create(:company) }
   # contract for a week
-  let!(:contract){ create(:contract, company: company, start_date: Time.zone.today, end_date: (Time.zone.today + 1.week)) }
+  let!(:contract) do 
+    start_date = Time.zone.today.beginning_of_week
+    end_date = start_date + 1.week
+    create(:contract, company: company, start_date: start_date, end_date: end_date)
+  end
 
 
-  describe ".create_schedules" do
+  describe "#create_schedules" do
     
     before do  
       manual_setup(company)
@@ -39,4 +43,62 @@ RSpec.describe Company, type: :model do
       expect(user.user_schedules.count).to eq(16)
     end
   end
+
+  describe "#specs_for_week" do
+    before do
+      manual_setup(company)
+      company.create_schedules!
+    end
+
+    it "should return a hash with information about the assigned blocks for given week" do
+      cw = Time.zone.today.strftime("%W").to_i
+      expected_hash = {
+        1 => { :blocks => ["#{cw}18".to_i, "#{cw}19".to_i, "#{cw}110".to_i, "#{cw}111".to_i, "#{cw}112".to_i, "#{cw}113".to_i, "#{cw}114".to_i, "#{cw}115".to_i], :day => 1, :demand => 8 }, 
+        2 => { :blocks => ["#{cw}28".to_i, "#{cw}29".to_i, "#{cw}210".to_i, "#{cw}211".to_i, "#{cw}212".to_i, "#{cw}213".to_i, "#{cw}214".to_i, "#{cw}215".to_i], :day => 2, :demand => 8 }
+      }
+
+      spec = company.specs_for_week(cw)
+      expect(spec).to eq(expected_hash)
+    end
+  end
+
+  describe "#users_specs_for_week" do
+    before do
+      manual_setup(company)
+      company.create_schedules!
+    end
+
+    it "should return a hash with information about the users availabilities for given week" do
+      cw = Time.zone.today.strftime("%W").to_i
+      user1 = company.users.first
+      user2 = company.users.second
+
+      user1.set_availability!(block: "#{cw}18".to_i)
+      user1.set_availability!(block: "#{cw}19".to_i)
+      user1.set_availability!(block: "#{cw}110".to_i)
+
+      user2.set_availability!(block: "#{cw}113".to_i)
+      user2.set_availability!(block: "#{cw}114".to_i)
+      user2.set_availability!(block: "#{cw}115".to_i)
+
+      user2.set_availability!(block: "#{cw}28".to_i)
+      user2.set_availability!(block: "#{cw}29".to_i)
+      user2.set_availability!(block: "#{cw}210".to_i)
+
+      expected_hash = {
+        1 => [
+          { :blocks => ["#{cw}18".to_i, "#{cw}19".to_i, "#{cw}110".to_i], :day => 1, :offer => 3, :user_id => user1.id },
+          { :blocks => ["#{cw}113".to_i, "#{cw}114".to_i, "#{cw}115".to_i], :day => 1, :offer => 3, :user_id => user2.id } 
+        ], 
+        2 => [
+          { :blocks => ["#{cw}28".to_i, "#{cw}29".to_i, "#{cw}210".to_i], :day => 2, :offer => 3, :user_id => user2.id }
+        ]
+      }
+
+
+      spec = company.users_specs_for_week(cw)
+      expect(spec).to eq(expected_hash)
+    end
+  end
+
 end

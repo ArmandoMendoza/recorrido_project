@@ -9,9 +9,11 @@ class UserSchedule < ApplicationRecord
 
   ### Scopes
   default_scope -> { order("time ASC") }
-  scope :by_week, ->(w) { where(week: w) }
-  scope :by_day,  ->(d) { where(day: d)  }
-
+  scope :by_week,  ->(w) { where(week: w) }
+  scope :by_day,   ->(d) { where(day: d)  }
+  scope :by_block, ->(b) { where(block: b)  }
+  scope :availables, -> { where(available: true) }
+    
   def hour_block
     start_hour = time.strftime("%H:%M")
     end_hour = (time + Schedule::DateRuleGenerator::BLOCK_DURATION.hour).strftime("%H:%M")

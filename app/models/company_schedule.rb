@@ -11,6 +11,7 @@ class CompanySchedule < ApplicationRecord
   default_scope -> { order("time ASC") }
   scope :by_week, ->(w) { where(week: w) }
   scope :by_day,  ->(d) { where(day: d)  }
+  scope :by_block,->(b) { where(block: b)  }
 
   def hour_block
     start_hour = time.strftime("%H:%M")
