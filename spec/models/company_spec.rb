@@ -1,14 +1,5 @@
 require 'rails_helper'
 
-def manual_setup(company)
-  3.times do 
-    create(:user, company: company)
-  end
-  #monday 8 hours from 8 to 16 from factories equal to 8 block per day
-  create(:contract_schedule, day: 1, contract: company.contract) 
-  #thuesday 8 hours from 8 to 16 from factories equal to 8 block per day
-  create(:contract_schedule, day: 2, contract: company.contract) 
-end
 
 RSpec.describe Company, type: :model do
 
@@ -20,6 +11,15 @@ RSpec.describe Company, type: :model do
     create(:contract, company: company, start_date: start_date, end_date: end_date)
   end
 
+  def manual_setup(company)
+    3.times do 
+      create(:user, company: company)
+    end
+    #monday 8 hours from 8 to 16 from factories equal to 8 block per day
+    create(:contract_schedule, day: 1, contract: company.contract) 
+    #thuesday 8 hours from 8 to 16 from factories equal to 8 block per day
+    create(:contract_schedule, day: 2, contract: company.contract) 
+  end
 
   describe "#create_schedules" do
     
