@@ -36,6 +36,21 @@ class Company < ApplicationRecord
     end
   end
 
+  def schedule_for_week(week)
+    hsh = {}
+    company_schedules.by_week(week).each do |schedule|
+      date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
+      if hsh[date]
+        hsh[date] << { hour: schedule.hour_block, name: schedule&.user&.name }
+      else
+        hsh[date] = [{ hour: schedule.hour_block, name: schedule&.user&.name }] 
+      end
+    end
+    hsh
+  end
+
+  ##---- algorithm methods
+
   def specs_by_day(week:, day:)
     hsh = { day: day, blocks: [] }
     schedules = company_schedules.by_week(week).by_day(day)
@@ -69,4 +84,15 @@ class Company < ApplicationRecord
     hsh
   end
 
+  def assignment_process_for_week(week)
+    company_specs = specs_for_week(week)
+    users_specs = users_specs_for_week(week)
+    results = Schedule::Algorithms::SimpleAssignmentAlgorithm.new(company_specs: company_specs, users_specs: users_specs).run
+    company_schedules.update_all(user_id: nil)
+    results.each do |result|
+      company_schedules.find_by(block: result[:block])&.update_columns(user_id: result[:user_id])
+    end
+  end
+
+  ## --------------------
 end

@@ -27,4 +27,11 @@ class User < ApplicationRecord
     schedule = user_schedules.find_by!(block: block)
     schedule.update_columns(available: true)
   end
+
+  def unset_availability!(block:)
+    schedule = user_schedules.find_by!(block: block)
+    schedule.update_columns(available: false)
+  end
+
+
 end

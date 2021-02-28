@@ -15,8 +15,8 @@ class UserSchedule < ApplicationRecord
   scope :availables, -> { where(available: true) }
     
   def hour_block
-    start_hour = time.strftime("%H:%M")
-    end_hour = (time + Schedule::DateRuleGenerator::BLOCK_DURATION.hour).strftime("%H:%M")
+    start_hour = time.in_time_zone("Santiago").strftime("%H:%M")
+    end_hour = (time.in_time_zone("Santiago") + Schedule::DateRuleGenerator::BLOCK_DURATION.hour).strftime("%H:%M")
     "#{start_hour} - #{end_hour}"
   end
 
