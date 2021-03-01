@@ -64,6 +64,19 @@ class Company < ApplicationRecord
     array
   end
 
+  def total_assignment_for_week(week)
+    array = []
+    totals = company_schedules.unscoped.by_week(week).joins(:user).group("users.name").count
+    if totals.any?
+      totals.each do |k,v|
+        array << { name: k, total: v }
+      end
+      unassigned = company_schedules.unscoped.by_week(week).where(user_id: nil).count
+      array << { name: "Unassigned", total: unassigned }
+    end
+    array
+  end
+
   ##---- algorithm methods
 
   def specs_by_day(week:, day:)

@@ -12,6 +12,7 @@
           <tbody>
             <table-tr
               v-for="value in schedule.values"
+              v-bind:key="value.id"
               v-bind:value="value"
             ></table-tr>
           </tbody>

@@ -21,6 +21,7 @@
     <div class="row">
       <schedules_container
         :schedules=schedules
+        :total=total
       ></schedules_container>
     </div>
   </div>
@@ -38,7 +39,8 @@
         company_id: null,
         companies: [],
         weeks: [],
-        schedules: []
+        schedules: [],
+        total: []
       } 
     },
 
@@ -63,9 +65,10 @@
         if(value !== "Select Week"){
           axios
           .get(`/api/companies/${this.company_id}/schedules`, { params: { week: value } })
-          .then((response)=>
-            this.schedules = response.data.data
-          )
+          .then((response)=>{
+            this.schedules = response.data.data.schedules
+            this.total = response.data.data.total
+          })
         }else{
           this.schedules = []
         }

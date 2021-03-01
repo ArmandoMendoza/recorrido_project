@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: "landing#index"
 
+  get "companies/:company_id/week/:week", to: "landing#assignment"
+
   namespace :api do
 
     scope :collections do

@@ -2,10 +2,12 @@ module Api
   class CompaniesController < BaseController
 
     def schedules
-      week = params.fetch(:week, nil) || Time.zone.today.cweek
+      week = (params.fetch(:week, nil) || Time.zone.today.cweek).to_i
       company = Company.find(params[:id])
-      schedules = company.schedules_for_week(week.to_i)
-      render json: { data: schedules }
+      company.assignment_process_for_week(week)
+      schedules = company.schedules_for_week(week)
+      total = company.total_assignment_for_week(week)
+      render json: { data: { schedules: schedules, total: total } }
     end
 
   end
