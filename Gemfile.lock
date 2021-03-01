@@ -76,6 +76,8 @@ GEM
       railties (>= 5.0.0)
     faker (2.16.0)
       i18n (>= 1.6, < 2)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     ffi (1.14.2)
     foreman (0.87.2)
     globalid (0.4.2)
@@ -210,6 +212,7 @@ DEPENDENCIES
   byebug
   factory_bot_rails
   faker
+  fast_jsonapi
   foreman
   ice_cube
   listen (~> 3.3)

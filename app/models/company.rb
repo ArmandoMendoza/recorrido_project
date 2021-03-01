@@ -11,6 +11,17 @@ class Company < ApplicationRecord
   validates_presence_of :name
 
   ### Instance Methods
+  def weeks_collection
+    all_weeks = Company.first.company_schedules.pluck(:time).uniq.map do |time|
+      [time.in_time_zone("Santiago").to_date.cweek, time.in_time_zone("Santiago").to_date.year]
+    end.uniq
+    next_weeks = (Time.zone.today..Time.zone.today + 5.weeks).to_a.map do |time|
+      [time.in_time_zone("Santiago").to_date.cweek, time.in_time_zone("Santiago").to_date.year]
+    end.uniq
+    (all_weeks + next_weeks).uniq.map do |week|
+      { value: week[0], name: "#{week[0]} of #{week[1]}" }
+    end
+  end
 
   def available_users
     users
@@ -41,9 +52,9 @@ class Company < ApplicationRecord
     company_schedules.by_week(week).each do |schedule|
       date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
       if hsh[date]
-        hsh[date] << { hour: schedule.hour_block, name: schedule&.user&.name }
+        hsh[date] << { id: schedule.id, hour: schedule.hour_block, name: schedule&.user&.name }
       else
-        hsh[date] = [{ hour: schedule.hour_block, name: schedule&.user&.name }] 
+        hsh[date] = [{ id: schedule.id, hour: schedule.hour_block, name: schedule&.user&.name }] 
       end
     end
     array = []
