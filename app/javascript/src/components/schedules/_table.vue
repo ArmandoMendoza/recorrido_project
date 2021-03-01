@@ -13,8 +13,7 @@
             <table-tr
               v-for="value in schedule.values"
               v-bind:value="value"
-            >
-          </table-tr>
+            ></table-tr>
           </tbody>
         </table>
       </div>

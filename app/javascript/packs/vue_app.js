@@ -2,7 +2,6 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import Vue from 'vue/dist/vue.esm'
 import NavBar from '../src/components/shared/nav_bar.vue'
 import SelectorForm from '../src/components/selector/form.vue'
-import Schedules from '../src/components/schedules/container.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -11,8 +10,7 @@ document.addEventListener('turbolinks:load', () => {
     el: '#app',
     components: { 
       "nav-bar": NavBar, 
-      "selector-form": SelectorForm, 
-      "schedules": Schedules 
+      "selector-form": SelectorForm 
     }
   })
 })
