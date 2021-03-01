@@ -35,17 +35,10 @@
   export default {
     data: function() {
       return {
+        company_id: null,
         companies: [],
         weeks: [],
-        schedules: [
-          { date: "Feb 10", values: [{ hour: "19:00 - 20:00", name: "Benjamin"}, { hour: "19:00 - 20:00", name: "" }] },
-          { date: "Feb 11", values: [{ hour: "19:00 - 20:00", name: "Ernesto"}, { hour: "19:00 - 20:00", name: "Ernesto" }] },
-          { date: "Feb 12", values: [{ hour: "19:00 - 20:00", name: "Barbara"}, { hour: "19:00 - 20:00", name: "Barbara "}] },
-          { date: "Feb 13", values: [{ hour: "19:00 - 20:00", name: "Barbara"}, { hour: "19:00 - 20:00", name: "Barbara "}] },
-          { date: "Feb 14", values: [{ hour: "19:00 - 20:00", name: "Barbara"}, { hour: "19:00 - 20:00", name: "Barbara "}] },
-          { date: "Feb 15", values: [{ hour: "19:00 - 20:00", name: "Barbara"}, { hour: "19:00 - 20:00", name: "Barbara "}] },
-          { date: "Feb 16", values: [{ hour: "19:00 - 20:00", name: "Barbara"}, { hour: "19:00 - 20:00", name: "Barbara "}] },        
-        ]
+        schedules: []
       } 
     },
 
@@ -53,12 +46,14 @@
       onChangeCompany: function(event){
         let value = event.target.value
         if(value !== "Select Company"){
+          this.company_id = value
           axios
-          .get(`/api/collections/companies/${value}/weeks`)
+          .get(`/api/collections/companies/${this.company_id}/weeks`)
           .then((response)=>
             this.weeks = response.data.data
           )
         }else{
+          this.company_id = null
           this.weeks = []
         }
       },
@@ -67,12 +62,12 @@
         let value = event.target.value
         if(value !== "Select Week"){
           axios
-          .get(`/api/collections/companies/${value}/weeks`)
+          .get(`/api/companies/${this.company_id}/schedules`, { params: { week: value } })
           .then((response)=>
-            this.weeks = response.data.data
+            this.schedules = response.data.data
           )
         }else{
-          this.weeks = []
+          this.schedules = []
         }
       }
     },

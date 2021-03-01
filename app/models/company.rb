@@ -47,7 +47,7 @@ class Company < ApplicationRecord
     end
   end
 
-  def schedule_for_week(week)
+  def schedules_for_week(week)
     hsh = {}
     company_schedules.by_week(week).each do |schedule|
       date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
