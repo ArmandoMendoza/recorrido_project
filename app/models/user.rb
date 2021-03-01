@@ -9,6 +9,23 @@ class User < ApplicationRecord
 
   ### Instance Methods
 
+  def schedules_for_week(week)
+    hsh = {}
+    user_schedules.by_week(week).each do |schedule|
+      date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
+      if hsh[date]
+        hsh[date] << { id: schedule.id, hour: schedule.hour_block, block: schedule.block, available: schedule.available }
+      else
+        hsh[date] = [{ id: schedule.id, hour: schedule.hour_block, block: schedule.block, available: schedule.available }] 
+      end
+    end
+    array = []
+    hsh.each do |k, v|
+      array << { date: k, values: v }
+    end
+    array
+  end
+
   def specs_by_day(week:, day:)
     schedules = user_schedules.by_week(week).by_day(day).availables
     

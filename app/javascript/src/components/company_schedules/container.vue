@@ -31,13 +31,6 @@
   export default {
     props: ["schedules", "total"],
 
-    computed: {
-      checkTotal: function(){
-        console.log(this.total)
-        return this.total.length > 0 
-      }
-    },
-
     components: {
       "schedule-table": Table
     }

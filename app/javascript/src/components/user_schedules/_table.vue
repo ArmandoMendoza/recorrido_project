@@ -1,0 +1,40 @@
+<template>
+
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td colspan="3" class="text-center td-title">{{schedule.date}}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <table-tr
+              v-for="value in schedule.values"
+              v-bind:key="value.id"
+              v-bind:value="value"
+            ></table-tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+  import Tr from './_tr.vue'
+  export default {
+    props: ["schedule"],
+    components: {
+      "table-tr": Tr
+    }
+  }
+</script>
+
+<style scoped>
+  .td-title {
+    background-color: #FDFACE;
+  }
+</style>  

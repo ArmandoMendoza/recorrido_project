@@ -19,10 +19,10 @@
       <br>
     </div>
     <div class="row">
-      <schedules_container
+      <schedules-container
         :schedules=schedules
         :total=total
-      ></schedules_container>
+      ></schedules-container>
     </div>
   </div>
 
@@ -30,7 +30,7 @@
 
 <script>
   import axios from 'axios'
-  import SchedulesContainer from '../schedules/container.vue'
+  import CompanySchedulesContainer from '../company_schedules/container.vue'
 
 
   export default {
@@ -84,7 +84,7 @@
     },
 
     components: {
-      schedules_container: SchedulesContainer
+      "schedules-container": CompanySchedulesContainer
     }
 
   }

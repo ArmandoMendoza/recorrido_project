@@ -1,6 +1,8 @@
 <div id='app'>
   <nav-bar></nav-bar>
-
+  <user-selector
+    v-bind:company="<%= @company %>"
+    v-bind:week="<%= @week %>"
+  ></user-selector>
 </div>
-
 <%= javascript_pack_tag 'assignment' %>

@@ -13,9 +13,14 @@ Rails.application.routes.draw do
     end
 
     resources :companies, only: [:show] do
-
       member do
         get :schedules
+      end
+
+      resources :users, module: :companies do
+        member do
+          get :schedules
+        end
       end
     end
 

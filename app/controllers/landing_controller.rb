@@ -4,8 +4,9 @@ class LandingController < ApplicationController
   end
 
   def assignment
-    @company = Company.find(params[:company_id])
-    @week = params[:week]
+    company = Company.find(params[:company_id])
+    @week = params[:week].to_i
+    @company = CompanySerializer.new(company).serialized_json
   end
 
 
