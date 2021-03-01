@@ -46,7 +46,11 @@ class Company < ApplicationRecord
         hsh[date] = [{ hour: schedule.hour_block, name: schedule&.user&.name }] 
       end
     end
-    hsh
+    array = []
+    hsh.each do |k, v|
+      array << { date: k, values: v }
+    end
+    array
   end
 
   ##---- algorithm methods
