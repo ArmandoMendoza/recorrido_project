@@ -14,6 +14,7 @@
               v-for="value in schedule.values"
               v-bind:key="value.id"
               v-bind:value="value"
+              v-bind:user="user"
             ></table-tr>
           </tbody>
         </table>
@@ -26,7 +27,7 @@
 <script>
   import Tr from './_tr.vue'
   export default {
-    props: ["schedule"],
+    props: ["schedule", "user"],
     components: {
       "table-tr": Tr
     }
@@ -34,7 +35,5 @@
 </script>
 
 <style scoped>
-  .td-title {
-    background-color: #FDFACE;
-  }
-</style>  
+  @import "../../assets/css/main.css"
+</style>

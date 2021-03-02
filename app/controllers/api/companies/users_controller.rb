@@ -13,6 +13,15 @@ module Api
       }
     end
 
+    def set_availability
+      block = params.fetch(:block, nil)
+      @user.set_availability!(block: block) if block
+    end
+
+    def unset_availability
+      block = params.fetch(:block, nil)
+      @user.unset_availability!(block: block) if block
+    end
 
     private
 

@@ -2,7 +2,7 @@
 
   <tr>
     <td v-bind:class="checkHour" class="text-center">{{ value.hour }}</td>
-    <td v-html="userName" class="text-center"></td>
+    <td v-html="userName" v-bind:style="{backgroundColor: value.color}" class="text-center"></td>
   </tr>
 
 </template>
@@ -14,9 +14,9 @@
     computed: {
       checkHour: function(){
         if(this.value.name === null)
-          return { inactive: true }
+          return { "inactive-hour": true }
         else
-          return { active: true }
+          return { "active-hour": true }
       },
 
       userName: function(){
@@ -30,10 +30,5 @@
 </script>
 
 <style scoped>
-  .inactive {
-    background-color: #FDCECE;
-  }
-  .active {
-    background-color: #DCFDCE;
-  }
-</style> 
+  @import "../../assets/css/main.css"
+</style>

@@ -3,13 +3,13 @@ require 'faker'
 
 company = Company.find_or_create_by!(name: "Recorrido.cl")
 
-ernesto = company.users.find_or_create_by!(name: "Ernesto")
-barbara = company.users.find_or_create_by!(name: "Bárbara")
-benjamin = company.users.find_or_create_by!(name: "Benjamin")
+ernesto = company.users.find_or_create_by!(name: "Ernesto", color: "#EDBB99")
+barbara = company.users.find_or_create_by!(name: "Bárbara", color: "#D2B4DE")
+benjamin = company.users.find_or_create_by!(name: "Benjamin", color: "#AED6F1")
 
 unless company.contract
   start_date = Time.zone.today.beginning_of_week
-  end_date = start_date + 1.week
+  end_date = start_date + 5.weeks
   company.create_contract!(terms: "Et sed sed. Id quae qui. Pariatur autem rerum.", start_date: start_date, end_date: end_date)
 end
 

@@ -14,22 +14,32 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  
   export default {
-    props: ["value"],
+    props: ["value", "user"],
     
     computed: {
       checkHour: function(){
         if(this.value.available)
-          return { active: true }
+          return { "active-hour": true }
         else
-          return { inactive: true }
+          return { "inactive-hour": true }
       }
     },
 
     methods: {
       onChangeUser: function(event){
-        let value = this.value.block
-        console.log(value)
+        var action = (this.value.available) ? "set_availability" : "unset_availability"
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        var config = {
+          headers: { "X-CSRF-Token": csrfToken }
+        }
+        axios
+        .put(`/api/companies/${this.user.attributes.company_id}/users/${this.user.id}/${action}`, { block: this.value.block }, config)
+        .then((response)=>
+          console.log(response)
+        )
       }
     }
 
@@ -37,10 +47,5 @@
 </script>
 
 <style scoped>
-  .inactive {
-    background-color: #FDCECE;
-  }
-  .active {
-    background-color: #DCFDCE;
-  }
-</style> 
+  @import "../../assets/css/main.css"
+</style>

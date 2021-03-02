@@ -10,10 +10,17 @@
               <option selected>Select User</option>
               <option v-for="user in users" v-bind:value="user.id">{{user.attributes.name}}</option>
             </select>        
+            
+            <div class="d-grid gap-2 d-md-flex">
+              <a class="btn btn-secondary" href="/" data-turbolinks="false" role="button">Volver</a>
+            </div>
+          
           </div>
         </div>
       </div>
     </div>
+
+
     <div class="row">
       <schedules-container
         v-bind:schedules="schedules"
@@ -45,7 +52,7 @@
       onChangeUser: function(event){
         let value = event.target.value
         if(value !== "Select User"){
-            this.user = _.find(this.users, function(u){ return u.id === value })
+          this.user = _.find(this.users, function(u){ return u.id === value })
           axios
           .get(`/api/companies/${this.data_company.id}/users/${this.user.id}/schedules`, { params: { week: this.week } })
           .then((response)=>{

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       resources :users, module: :companies do
         member do
           get :schedules
+          put :set_availability
+          put :unset_availability
         end
       end
     end

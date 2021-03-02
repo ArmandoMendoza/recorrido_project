@@ -51,10 +51,11 @@ class Company < ApplicationRecord
     hsh = {}
     company_schedules.by_week(week).each do |schedule|
       date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
+      data_hash = { id: schedule.id, hour: schedule.hour_block, name: schedule&.user&.name, color: schedule&.user&.color }
       if hsh[date]
-        hsh[date] << { id: schedule.id, hour: schedule.hour_block, name: schedule&.user&.name }
+        hsh[date] << data_hash
       else
-        hsh[date] = [{ id: schedule.id, hour: schedule.hour_block, name: schedule&.user&.name }] 
+        hsh[date] = [data_hash] 
       end
     end
     array = []

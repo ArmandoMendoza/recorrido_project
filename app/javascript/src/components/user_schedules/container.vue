@@ -13,7 +13,6 @@
 
 <script>
   import Table from './_table.vue'
-  import axios from 'axios'
 
   export default {
     props: ["user", "schedules"],

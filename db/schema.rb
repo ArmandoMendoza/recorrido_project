@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_154641) do
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["block"], name: "index_company_schedules_on_block"
     t.index ["company_id"], name: "index_company_schedules_on_company_id"
     t.index ["user_id"], name: "index_company_schedules_on_user_id"
   end
@@ -64,12 +65,14 @@ ActiveRecord::Schema.define(version: 2021_02_26_154641) do
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["block"], name: "index_user_schedules_on_block"
     t.index ["company_id"], name: "index_user_schedules_on_company_id"
     t.index ["user_id"], name: "index_user_schedules_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+    t.string "color"
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

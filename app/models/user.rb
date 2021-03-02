@@ -13,10 +13,11 @@ class User < ApplicationRecord
     hsh = {}
     user_schedules.by_week(week).each do |schedule|
       date = schedule.time.in_time_zone("Santiago").strftime("%A %d of %B")
+      data_hash = { id: schedule.id, hour: schedule.hour_block, block: schedule.block, available: schedule.available, color: color }
       if hsh[date]
-        hsh[date] << { id: schedule.id, hour: schedule.hour_block, block: schedule.block, available: schedule.available }
+        hsh[date] << data_hash
       else
-        hsh[date] = [{ id: schedule.id, hour: schedule.hour_block, block: schedule.block, available: schedule.available }] 
+        hsh[date] = [data_hash] 
       end
     end
     array = []

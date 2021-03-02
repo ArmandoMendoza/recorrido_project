@@ -34,7 +34,5 @@
 </script>
 
 <style scoped>
-  .td-title {
-    background-color: #FDFACE;
-  }
-</style>  
+  @import "../../assets/css/main.css"
+</style>

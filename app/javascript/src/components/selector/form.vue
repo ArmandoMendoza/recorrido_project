@@ -13,6 +13,10 @@
               <option selected>Select Week</option>
               <option v-for="week in weeks" v-bind:value="week.value">{{week.name}}</option>
             </select>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="schedules.length > 0">
+              <a class="btn btn-primary" v-bind:href="editUrl" data-turbolinks="false" role="button">Editar Disponibilidad</a>
+            </div>
           </div>
         </div>
       </div>
@@ -37,6 +41,7 @@
     data: function() {
       return {
         company_id: null,
+        editUrl: "#",
         companies: [],
         weeks: [],
         schedules: [],
@@ -57,11 +62,14 @@
         }else{
           this.company_id = null
           this.weeks = []
+          this.schedules = []
+          this.total = []
         }
       },
 
       onChangeWeek: function(event){
         let value = event.target.value
+        this.editUrl = `/companies/${this.company_id}/week/${value}`
         if(value !== "Select Week"){
           axios
           .get(`/api/companies/${this.company_id}/schedules`, { params: { week: value } })
@@ -71,6 +79,7 @@
           })
         }else{
           this.schedules = []
+          this.total = []
         }
       }
     },

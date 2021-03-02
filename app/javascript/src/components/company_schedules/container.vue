@@ -11,7 +11,7 @@
       <div class="card">
         <div class="card-body">
           <table class="table table-bordered">
-            <tr v-for="value in total">
+            <tr v-for="value in total" v-bind:style="{ backgroundColor: value.color }">
               <td>{{value.name}}</td>
               <td>{{value.total}}</td>
             </tr>
