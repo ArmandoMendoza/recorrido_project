@@ -23,7 +23,7 @@ RSpec.describe Api::CollectionsController, type: :request do
     
     it "should return a collection of objects with the information to create an selector weeks" do
       start_date = Time.zone.today.beginning_of_week
-      end_date = start_date + 5.weeks
+      end_date = start_date + 20.weeks
       company = create(:company)
       create(:contract, company: company, start_date: start_date, end_date: end_date)
       company.create_schedules!

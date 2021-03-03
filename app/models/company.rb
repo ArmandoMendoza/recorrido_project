@@ -16,13 +16,13 @@ class Company < ApplicationRecord
 
   ### Instance Methods
   def weeks_collection
-    all_weeks = Company.first.company_schedules.pluck(:time).uniq.map do |time|
+    old_weeks = company_schedules.where("time < ?", Time.zone.today).pluck(:time).uniq.map do |time|
       [time.in_time_zone("Santiago").to_date.cweek, time.in_time_zone("Santiago").to_date.year]
     end.uniq
     next_weeks = (Time.zone.today..Time.zone.today + 5.weeks).to_a.map do |time|
       [time.in_time_zone("Santiago").to_date.cweek, time.in_time_zone("Santiago").to_date.year]
     end.uniq
-    (all_weeks + next_weeks).uniq.map do |week|
+    (old_weeks + next_weeks).uniq.map do |week|
       { value: week[0], name: "#{week[0]} of #{week[1]}" }
     end
   end

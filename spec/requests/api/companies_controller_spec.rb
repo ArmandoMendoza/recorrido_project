@@ -41,7 +41,7 @@ RSpec.describe Api::CompaniesController, type: :request do
 
   describe "POST api/companies/id/schedules" do
     
-    it "should create company with contract and contract_schedules if the params is given" do
+    it "should create company with contract and contract_schedules if the params are given" do
 
       params = {
         company: {
