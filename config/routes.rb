@@ -8,16 +8,16 @@ Rails.application.routes.draw do
 
     scope :collections do
       get :companies, to: "collections#companies", as: :companies_collection
-      get "companies/:company_id/weeks", to: "collections#weeks", as: :company_weeks
-      get "companies/:company_id/users", to: "collections#users", as: :company_users
+      get "companies/:company_id/weeks", to: "collections#weeks", as: :companies_weeks_collection
+      get "companies/:company_id/users", to: "collections#users", as: :companies_users_collection
     end
 
-    resources :companies, only: [:show, :create] do
+    resources :companies, only: [:create] do
       member do
         get :schedules
       end
 
-      resources :users, module: :companies do
+      resources :users, only: [:create], module: :companies do
         member do
           get :schedules
           put :set_availability

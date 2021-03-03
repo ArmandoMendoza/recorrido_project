@@ -13,7 +13,7 @@ FactoryBot.define do
   factory :contract do
     terms { Faker::Lorem.paragraph }
     start_date { Time.zone.today }
-    end_date { Time.zone.today + 6.months }
+    end_date { Time.zone.today + 1.week }
     company
   end
 
