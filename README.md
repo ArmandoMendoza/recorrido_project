@@ -14,3 +14,13 @@ Instalación:
 
 La app es una app rails full stack, esto significa que tiene tiene soporte ActiveView entre otros.
 Existen 6 modelos:
+- Company
+- CompanySchedule
+- Contract
+- ContractSchedule
+- User
+- UserSchedule
+
+Las relaciones y el modelado se detallan aqui: https://github.com/ArmandoMendoza/recorrido_project/blob/master/erd.pdf
+
+
