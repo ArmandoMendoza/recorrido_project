@@ -1,7 +1,7 @@
 <template>
 
   <tr>
-    <td v-bind:class="checkHour" class="text-center">{{ value.hour }}</td>
+    <td v-bind:class="checkHour" class="text-center">{{ value.hour }} </td>
     <td class="text-center">
       <input
         type="checkbox"
@@ -17,7 +17,7 @@
   import axios from 'axios'
   
   export default {
-    props: ["value", "user"],
+    props: ["value", "user", "checked"],
     
     computed: {
       checkHour: function(){
@@ -29,7 +29,7 @@
     },
 
     methods: {
-      onChangeUser: function(event){
+      updateAvailability: function(){
         var action = (this.value.available) ? "set_availability" : "unset_availability"
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
         var config = {
@@ -37,12 +37,25 @@
         }
         axios
         .put(`/api/companies/${this.user.attributes.company_id}/users/${this.user.id}/${action}`, { block: this.value.block }, config)
-        .then((response)=>
-          console.log(response)
-        )
-      }
-    }
+        .then((response)=>{
+          console.log(response.data.available)
+          this.value.available = response.data.available
+        })        
+      },
 
+      onChangeUser: function(event){
+        this.updateAvailability()
+      }
+    },
+
+    watch: { 
+      checked: function(newVal, oldVal) { // watch it
+        if (newVal !== this.value.available){
+          this.value.available = newVal
+          this.updateAvailability()
+        }
+      }
+    }  
   }
 </script>
 

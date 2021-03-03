@@ -25,12 +25,14 @@
 
 <script>
   import Tr from './_tr.vue'
+
   export default {
     props: ["schedule"],
     components: {
       "table-tr": Tr
     }
   }
+  
 </script>
 
 <style scoped>

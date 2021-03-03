@@ -15,12 +15,18 @@ module Api
 
     def set_availability
       block = params.fetch(:block, nil)
-      @user.set_availability!(block: block) if block
+      if block
+        value = @user.set_availability!(block: block)
+        render json: { available: value }
+      end
     end
 
     def unset_availability
       block = params.fetch(:block, nil)
-      @user.unset_availability!(block: block) if block
+      if block
+        value = @user.unset_availability!(block: block)
+        render json: { available: value }
+      end
     end
 
     private

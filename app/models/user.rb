@@ -43,12 +43,14 @@ class User < ApplicationRecord
 
   def set_availability!(block:)
     schedule = user_schedules.find_by!(block: block)
-    schedule.update_columns(available: true)
+    schedule.update!(available: true)
+    schedule.available
   end
 
   def unset_availability!(block:)
     schedule = user_schedules.find_by!(block: block)
-    schedule.update_columns(available: false)
+    schedule.update!(available: false)
+    schedule.available
   end
 
 
