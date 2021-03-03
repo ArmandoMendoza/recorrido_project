@@ -13,17 +13,17 @@ module Schedule::Algorithms
     def run
 
       reset_counter_assigment
-      made_assigment
+      make_assigment
 
       reset_counter_assigment
-      made_assigment
+      make_assigment
 
       results 
     end
 
     private
 
-    def made_assigment
+    def make_assigment
       total_users = user_ids.size
       return if total_users == 0
 
@@ -33,7 +33,7 @@ module Schedule::Algorithms
 
 
       days.each do |day|
-        ## this return the user_ids array with more blocks availables. This is to rotate the users
+        ## this return the user_ids array with less blocks availables. This is to rotate the users
         ids = calculate_user_availability.reject { |k, v| v == 0}.sort_by { |k, v| v }.to_h.keys
         company_spec = company_specs[day]
 

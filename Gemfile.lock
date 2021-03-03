@@ -105,6 +105,8 @@ GEM
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
+    or-tools (0.4.1)
+      rice (>= 3)
     pg (1.2.3)
     puma (5.2.1)
       nio4r (~> 2.0)
@@ -146,6 +148,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rice (3.0.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -216,6 +219,7 @@ DEPENDENCIES
   foreman
   ice_cube
   listen (~> 3.3)
+  or-tools
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)

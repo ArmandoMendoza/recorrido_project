@@ -13,6 +13,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'ice_cube'
 gem 'foreman'
 gem 'fast_jsonapi'
+gem 'or-tools'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
