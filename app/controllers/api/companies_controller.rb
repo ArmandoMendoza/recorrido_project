@@ -6,7 +6,7 @@ module Api
       company = Company.new(company_params)
       if company.save
         company.create_schedules!
-        render json: company, status: :created
+        render json: CompanySerializer.new(company).serialized_json, status: :created
       else
         render json: company.errors.full_messages, status: 422
       end

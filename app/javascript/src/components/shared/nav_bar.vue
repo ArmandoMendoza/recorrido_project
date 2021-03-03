@@ -2,8 +2,10 @@
   <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
       <span class="navbar-brand mb-0 h1">Guardianes Informaticos SpA</span>
-        <user-modal></user-modal>
+      <div class="d-flex">
         <company-modal></company-modal>
+        <user-modal></user-modal>
+      </div>
     </div>
   </nav>
 </template>

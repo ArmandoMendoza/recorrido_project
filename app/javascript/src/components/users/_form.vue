@@ -24,7 +24,10 @@
     </div>
     <div class="mb-3 row">
       <div class="col">
-      <button type="button" class="btn btn-primary" @click="sendData">Save changes</button>
+      <button type="button" class="btn btn-primary" @click="sendData" v-bind:disabled="loading">
+        <span class="spinner-border spinner-border-sm" v-if="loading" role="status" aria-hidden="true"></span>
+        Save
+      </button>
       <!-- <button type="button" class="btn btn-secondary" @click="hideModal">Close</button> -->
       </div>
     </div>
@@ -46,6 +49,7 @@
         company_id: null,
         name: null,
         color: null,
+        loading: false
       }
     },
 
@@ -58,16 +62,24 @@
     methods: {
 
       success: function(response){
+        this.loading = false
         console.log("ok",response)
         window.location.reload()
       },
 
       handleErrors: function(data){
+        this.loading = false
         this.hasErrors = true
-        this.errorsMsg = ["error"]
+        this.errorsMsg = data
       },
 
       sendData: function(){
+        if (this.company_id === null){
+          this.hasErrors = true
+          this.errorsMsg = ["Must select a Company"]
+          return
+        }
+
         let self = this
         let formData = {
           user: { 
@@ -80,7 +92,7 @@
         let config = {
           headers: { "X-CSRF-Token": csrfToken }
         }
-
+        this.loading = true
         axios.post(`/api/companies/${this.company_id}/users`, formData, config)
         .then(function(response){
           self.success(response)

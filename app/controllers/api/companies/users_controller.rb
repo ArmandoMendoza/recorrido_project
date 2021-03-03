@@ -1,9 +1,16 @@
 module Api
   class Companies::UsersController < BaseController
     before_action :set_company
-    before_action :set_user
+    before_action :set_user, except: [:create]
 
-    def index
+    def create
+      user = @company.users.new(user_params)
+      if user.save
+        @company.create_user_schedules!(user.id)
+        render json: UserSerializer.new(user).serialized_json, status: :created
+      else
+        render json: user.errors.full_messages, status: 422
+      end
     end
 
     def schedules
@@ -37,6 +44,10 @@ module Api
 
     def set_user
       @user = @company.users.find(params[:id])
+    end
+
+    def user_params
+      params.require(:user).permit(:name, :color)
     end
 
   end

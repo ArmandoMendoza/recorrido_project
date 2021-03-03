@@ -139,8 +139,11 @@
           
     <div class="mb-3 row">
       <div class="col">
-      <button type="button" class="btn btn-primary" @click="sendData">Save changes</button>
-      <button type="button" class="btn btn-secondary" @click="hideModal">Close</button>
+      <button type="button" class="btn btn-primary" @click="sendData" v-bind:disabled="loading">
+        <span class="spinner-border spinner-border-sm" v-if="loading" role="status" aria-hidden="true"></span>
+        Save
+      </button>
+      <!-- <button type="button" class="btn btn-secondary" @click="hideModal">Close</button> -->
       </div>
     </div>
   </form>
@@ -158,6 +161,7 @@
         numbers: this.generateNumbers(),
         hasErrors: false,
         errorsMsg: "",
+        loading: false,
         company: {
           name: null
         },
@@ -202,11 +206,13 @@
       },
 
       success: function(response){
+        this.loading = false
         console.log("ok",response)
         window.location.reload()
       },
 
       handleErrors: function(data){
+        this.loading = false
         this.hasErrors = true
         this.errorsMsg = data
       },
@@ -228,7 +234,7 @@
         let config = {
           headers: { "X-CSRF-Token": csrfToken }
         }
-
+        this.loading = true
         axios.post("/api/companies", formData, config)
         .then(function(response){
           self.success(response)

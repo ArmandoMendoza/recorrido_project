@@ -23,7 +23,7 @@
       </transition>
     </div>
 
-  <button id="show-modal" @click="showModal=true" class="btn btn-sm btn-primary">Create Company</button>
+  <button id="show-modal" @click="showModal=true" class="btn btn-sm btn-primary m-1">Create Company</button>
  </div>
 
 </template>
