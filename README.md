@@ -10,3 +10,7 @@ Instalación:
 * Ejecutar: rake yarn:install
 * Configurar credenciales de BD en config/database.yml
 * Ejecutar: rake db:create && rake db:migrate && rake db:seed 
+* Ejecutar pruebas: rake
+
+La app es una app rails full stack, esto significa que tiene tiene soporte ActiveView entre otros.
+Existen 6 modelos:
