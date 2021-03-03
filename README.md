@@ -1,24 +1,12 @@
 # README
+Requerimientos:
+* Ruby 2.7.2
+* Rails 6.1
+* Node 12
+* Postgresql
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Instalación:
+* Ejecutar: bundle
+* Ejecutar: rake yarn:install
+* Configurar credenciales de BD en config/database.yml
+* Ejecutar: rake db:create && rake db:migrate && rake db:seed 
