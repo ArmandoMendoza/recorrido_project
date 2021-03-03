@@ -194,6 +194,10 @@
         this.$emit("hide")
       },
 
+      cleanSchedules: function(){
+        return _.filter(this.contract_schedules, function(cs){ return cs.start_hour !== null })
+      },
+
       generateNumbers: function(){
         return _.range(1, 22)
       },
@@ -216,7 +220,7 @@
             contract_attributes: {
               start_date: this.contract.start_date,
               end_date: this.contract.end_date,
-              contract_schedules_attributes: this.contract_schedules
+              contract_schedules_attributes: this.cleanSchedules()
             },
           },
         }

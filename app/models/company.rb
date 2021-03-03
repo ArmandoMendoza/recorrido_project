@@ -37,14 +37,21 @@ class Company < ApplicationRecord
     s_date = start_date || contract.start_date
     e_date = end_date   || contract.end_date
 
-    
-    date_rules = Schedule::DateRuleGenerator.new(contract_schedules).rules
-    dates = Schedule::DateGenerator.new(start_date: s_date, end_date: e_date, date_rules: date_rules).dates
-    
+    dates = generate_dates(s_date, e_date)
     dates.each do |date|
       company_schedules.find_or_create_by!(date)
+    end
+  end
 
-      available_users.each do |user|
+  def create_user_schedules!(user_id, start_date: nil, end_date: nil)
+    user = users.find_by(id: user_id)
+
+    s_date = start_date || contract.start_date
+    e_date = end_date   || contract.end_date
+    
+    if user
+      dates = generate_dates(s_date, e_date)
+      dates.each do |date|
         user_schedules.find_or_create_by!(date.merge(user: user))
       end
     end
@@ -70,12 +77,12 @@ class Company < ApplicationRecord
 
   def total_assignment_for_week(week)
     array = []
-    totals = company_schedules.unscoped.by_week(week).joins(:user).group("users.name").count
+    totals = CompanySchedule.unscoped.by_week(week).where(company_id: id).joins(:user).group("users.name").count
     if totals.any?
       totals.each do |k,v|
         array << { name: k, total: v }
       end
-      unassigned = company_schedules.unscoped.by_week(week).where(user_id: nil).count
+      unassigned = company_schedules.by_week(week).where(user_id: nil).count
       array << { name: "Unassigned", total: unassigned }
     end
     array
@@ -127,4 +134,11 @@ class Company < ApplicationRecord
   end
 
   ## --------------------
+
+  private 
+    
+  def generate_dates(start_date, end_date)    
+    date_rules = Schedule::DateRuleGenerator.new(contract_schedules).rules
+    Schedule::DateGenerator.new(start_date: start_date, end_date: end_date, date_rules: date_rules).dates
+  end
 end

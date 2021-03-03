@@ -32,14 +32,20 @@ RSpec.describe Company, type: :model do
         company.create_schedules!
       }.to change(company.company_schedules, :count).by(16) #8 blocks for day 1 and 8 blocks for day 2
     end
+  end
+
+  describe "#create_user_schedule" do
+
+    before do  
+      manual_setup(company)
+    end
 
     it "should create records in table user_schedules for each user available" do 
+      user = company.users.sample
       expect {
-        company.create_schedules!
-      }.to change(company.user_schedules, :count).by(48) #8 blocks for day 1 and 8 blocks for day 2 * 3
+        company.create_user_schedules!(user.id)
+      }.to change(company.user_schedules, :count).by(16) #8 blocks for day 1 and 8 blocks for day 2
       
-      user = company.available_users.sample
-
       expect(user.user_schedules.count).to eq(16)
     end
   end
@@ -65,33 +71,35 @@ RSpec.describe Company, type: :model do
   describe "#users_specs_for_week" do
     before do
       manual_setup(company)
+      @user1 = company.users.first
+      @user2 = company.users.second
       company.create_schedules!
+      company.create_user_schedules!(@user1.id)
+      company.create_user_schedules!(@user2.id)
     end
 
     it "should return a hash with information about the users availabilities for given week" do
       cw = Time.zone.today.strftime("%W").to_i
-      user1 = company.users.first
-      user2 = company.users.second
 
-      user1.set_availability!(block: "#{cw}18".to_i)
-      user1.set_availability!(block: "#{cw}19".to_i)
-      user1.set_availability!(block: "#{cw}110".to_i)
+      @user1.set_availability!(block: "#{cw}18".to_i)
+      @user1.set_availability!(block: "#{cw}19".to_i)
+      @user1.set_availability!(block: "#{cw}110".to_i)
 
-      user2.set_availability!(block: "#{cw}113".to_i)
-      user2.set_availability!(block: "#{cw}114".to_i)
-      user2.set_availability!(block: "#{cw}115".to_i)
+      @user2.set_availability!(block: "#{cw}113".to_i)
+      @user2.set_availability!(block: "#{cw}114".to_i)
+      @user2.set_availability!(block: "#{cw}115".to_i)
 
-      user2.set_availability!(block: "#{cw}28".to_i)
-      user2.set_availability!(block: "#{cw}29".to_i)
-      user2.set_availability!(block: "#{cw}210".to_i)
+      @user2.set_availability!(block: "#{cw}28".to_i)
+      @user2.set_availability!(block: "#{cw}29".to_i)
+      @user2.set_availability!(block: "#{cw}210".to_i)
 
       expected_hash = {
         1 => [
-          { :blocks => ["#{cw}18".to_i, "#{cw}19".to_i, "#{cw}110".to_i], :day => 1, :offer => 3, :user_id => user1.id },
-          { :blocks => ["#{cw}113".to_i, "#{cw}114".to_i, "#{cw}115".to_i], :day => 1, :offer => 3, :user_id => user2.id } 
+          { :blocks => ["#{cw}18".to_i, "#{cw}19".to_i, "#{cw}110".to_i], :day => 1, :offer => 3, :user_id => @user1.id },
+          { :blocks => ["#{cw}113".to_i, "#{cw}114".to_i, "#{cw}115".to_i], :day => 1, :offer => 3, :user_id => @user2.id } 
         ], 
         2 => [
-          { :blocks => ["#{cw}28".to_i, "#{cw}29".to_i, "#{cw}210".to_i], :day => 2, :offer => 3, :user_id => user2.id }
+          { :blocks => ["#{cw}28".to_i, "#{cw}29".to_i, "#{cw}210".to_i], :day => 2, :offer => 3, :user_id => @user2.id }
         ]
       }
 

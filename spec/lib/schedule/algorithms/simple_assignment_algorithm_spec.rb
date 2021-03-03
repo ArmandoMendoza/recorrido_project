@@ -19,6 +19,9 @@ RSpec.describe Schedule::Algorithms::SimpleAssignmentAlgorithm, type: :lib do
     user1 = company.users.first
     user2 = company.users.second
 
+    company.create_user_schedules!(user1.id)
+    company.create_user_schedules!(user2.id)
+
     user1.set_availability!(block: "#{cw}18".to_i)
     user1.set_availability!(block: "#{cw}19".to_i)
     user1.set_availability!(block: "#{cw}113".to_i)
