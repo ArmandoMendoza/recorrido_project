@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get "companies/:company_id/users", to: "collections#users", as: :company_users
     end
 
-    resources :companies, only: [:show] do
+    resources :companies, only: [:show, :create] do
       member do
         get :schedules
       end

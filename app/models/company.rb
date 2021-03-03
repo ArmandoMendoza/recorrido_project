@@ -10,6 +10,8 @@ class Company < ApplicationRecord
   ### Validations
   validates_presence_of :name
 
+  accepts_nested_attributes_for :contract
+
   ### Instance Methods
   def weeks_collection
     all_weeks = Company.first.company_schedules.pluck(:time).uniq.map do |time|
@@ -34,6 +36,7 @@ class Company < ApplicationRecord
   def create_schedules!(start_date: nil, end_date: nil)
     s_date = start_date || contract.start_date
     e_date = end_date   || contract.end_date
+
     
     date_rules = Schedule::DateRuleGenerator.new(contract_schedules).rules
     dates = Schedule::DateGenerator.new(start_date: s_date, end_date: e_date, date_rules: date_rules).dates

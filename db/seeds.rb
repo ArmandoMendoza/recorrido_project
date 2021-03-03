@@ -1,11 +1,6 @@
 require 'faker'
 
-
 company = Company.find_or_create_by!(name: "Recorrido.cl")
-
-ernesto = company.users.find_or_create_by!(name: "Ernesto", color: "#EDBB99")
-barbara = company.users.find_or_create_by!(name: "Bárbara", color: "#D2B4DE")
-benjamin = company.users.find_or_create_by!(name: "Benjamin", color: "#AED6F1")
 
 unless company.contract
   start_date = Time.zone.today.beginning_of_week
@@ -24,6 +19,9 @@ contract.contract_schedules.find_or_create_by!(day: "saturday",  start_hour: "10
 contract.contract_schedules.find_or_create_by!(day: "sunday",    start_hour: "10:00", hours: 14)
 
 company.create_schedules!
+ernesto = company.users.find_or_create_by!(name: "Ernesto", color: "#EDBB99")
+barbara = company.users.find_or_create_by!(name: "Bárbara", color: "#D2B4DE")
+benjamin = company.users.find_or_create_by!(name: "Benjamin", color: "#AED6F1")
 
 week = Time.zone.today.strftime("%W")
 #monday
