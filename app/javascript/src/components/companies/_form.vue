@@ -4,7 +4,6 @@
     <p class="text-danger" v-if="hasErrors">
        {{ formatedErrorMsg }}
     </p>
-    </div>
     <div class="mb-3 row">
       <div class="col">
         <label for="exampleFormControlInput1" class="form-label" v-bind:class="{ 'text-danger': hasErrors }">Company Name *</label>
