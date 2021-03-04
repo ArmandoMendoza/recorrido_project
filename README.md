@@ -11,6 +11,7 @@ Instalación:
 * Configurar credenciales de BD en config/database.yml
 * Ejecutar: rake db:create && rake db:migrate && rake db:seed 
 * Ejecutar pruebas: rake
+* Ejecutar servidores: foreman s
 
 La app es una app rails full stack, esto significa que tiene tiene soporte ActiveView entre otros.
 Existen 6 modelos:
@@ -44,6 +45,7 @@ La interfaz grafica esta desarrollada en VueJs y es muy simple, pero cumple con 
 Hay algunas cosas que me hubiera gustado hacer, pero por razones de tiempo quedaron pendientes.
 * Implementar SideKiq para que la generacion de los CompanySchedule y UserSchedule se haga en segundo plano. Esto porque si una empresa tiene muchos usuarios y un contrato de varios años, puede aumentar el tiempo de espera drasticamente.
 * Desarrollar una suite de pruebas para UI.
+* Implementar Routes y Vuex en UI.
 
 
 
