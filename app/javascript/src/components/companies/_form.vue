@@ -183,7 +183,9 @@
 
     computed: {
       generateHours: function(){
-        return Array.from(Array(24-new Date().getHours()),(x,i)=>('0'+(23-i)).slice(-2)+':00').reverse()
+        var date = new Date()
+        date.setHours(0,0,0,0)
+        return Array.from(Array(24-date.getHours()),(x,i)=>('0'+(23-i)).slice(-2)+':00').reverse()
       },
 
       formatedErrorMsg: function(){
